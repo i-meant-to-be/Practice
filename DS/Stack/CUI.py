@@ -1,6 +1,6 @@
 import Stack
 
-S = Stack.Basic()
+S = Stack.Stack()
 Input = []
 
 while True:

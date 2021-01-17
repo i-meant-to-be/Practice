@@ -1,7 +1,7 @@
-import Queue
+import Basic
 import sys
 
-Q = Queue.Basic()
+Q = Basic.Basic()
 Input = []
 
 while True:
