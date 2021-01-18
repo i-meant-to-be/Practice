@@ -48,6 +48,11 @@ class Deque(Queue):
     # Size
 
 
+# Priority queue
+class Priority_Queue(Queue):
+    pass
+
+
 if __name__ == "__main__":
     deque = Deque()
     print(deque.IsEmpty())
