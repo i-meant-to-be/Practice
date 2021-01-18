@@ -31,7 +31,7 @@ class Deque(Queue):
         raise AttributeError("'Deque' object has no attribute 'Push'")
 
     def Insert_Front(self, N):
-        self.Arr = [N] + self.Arr[:]
+        self.Arr.insert(0, N)
 
     def Insert_Rear(self, N):
         self.Arr.append(N)
