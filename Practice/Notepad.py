@@ -1,5 +1,19 @@
-import sys
+from sys import stdin
 
-string = sys.stdin.readline().rstrip()
-for I in range(26):
-    print(string.index(chr(97 + I)) if string.count(chr(97 + I)) else -1, end=' ')
+input = stdin.readline
+
+sentence = input().rstrip()
+alphabet = ["c=", "c-", "d-", "lj", "nj", "s=", "z="]
+count = 0
+pointer = 0
+
+while pointer != len(sentence):
+    if sentence[pointer:pointer + 3] == "dz=":
+        pointer = pointer + 3
+    elif alphabet.count(sentence[pointer:pointer + 2]):
+        pointer = pointer + 2
+    else:
+        pointer = pointer + 1
+    count += 1
+
+print(count)

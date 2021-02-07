@@ -2,34 +2,26 @@ from __future__ import annotations
 
 
 class Node:
-    """ Node included in binary tree """
-
     def __init__(self, key: int, l_child: Node = None, r_child: Node = None):
         self.key = key
         self.l_child = l_child
         self.r_child = r_child
 
 
-class Tree:
-    """ Binary tree """
-
+class BinaryTree:
     def __init__(self, root: Node = None):
         self.root = root
 
-    def is_empty(self) -> bool:
-        """ Check whether a tree is empty """
-        return self._is_empty()
+    def isEmpty(self) -> bool:
+        return self._isEmpty()
 
     def search(self, key: int) -> bool:
-        """ Check whether a key is in a tree """
         return self._search(key)
 
     def insert(self, node: Node) -> bool:
-        """ Insert a node in tree using iteration """
         return self._insert(node)
 
     def delete(self, key: int) -> bool:
-        """ Delete a node from tree """
         return self._delete(key)
 
     def _traverse(self, key: int):
@@ -44,7 +36,7 @@ class Tree:
             else:
                 return None
 
-    def _is_empty(self):
+    def _isEmpty(self):
         return True if not self.root else False
 
     def _search(self, key: int):
@@ -89,34 +81,34 @@ class Tree:
                     dir_of_branch = "Right"
                     pointer = pointer.r_child
 
-            if pointer.l_child is None:
-                if pointer is self.root:
-                    self.root = pointer.r_child
-                elif dir_of_branch == "Left":
-                    parent_of_pointer.l_child = pointer.r_child
-                else:
-                    parent_of_pointer.r_child = pointer.r_child
-
-            elif pointer.r_child is None:
-                if pointer is self.root:
-                    self.root = pointer.l_child
-                elif dir_of_branch == "Left":
-                    parent_of_pointer.l_child = pointer.l_child
-                else:
-                    parent_of_pointer.r_child = pointer.l_child
-
+        if pointer.l_child is None:
+            if pointer is self.root:
+                self.root = pointer.r_child
+            elif dir_of_branch == "Left":
+                parent_of_pointer.l_child = pointer.r_child
             else:
-                parent_of_pointer = pointer
-                largest_node = pointer.l_child
-                dir_of_branch = "Left"
-                while largest_node.r_child:
-                    parent_of_pointer = largest_node
-                    largest_node = largest_node.r_child
-                    dir_of_branch = "Right"
+                parent_of_pointer.r_child = pointer.r_child
 
-                pointer.key = largest_node.key
-                if dir_of_branch == "Left":
-                    parent_of_pointer.l_child = largest_node.l_child
-                else:
-                    parent_of_pointer.r_child = largest_node.l_child
-            return True
+        elif pointer.r_child is None:
+            if pointer is self.root:
+                self.root = pointer.l_child
+            elif dir_of_branch == "Left":
+                parent_of_pointer.l_child = pointer.l_child
+            else:
+                parent_of_pointer.r_child = pointer.l_child
+
+        else:
+            parent_of_pointer = pointer
+            largest_node = pointer.l_child
+            dir_of_branch = "Left"
+            while largest_node.r_child:
+                parent_of_pointer = largest_node
+                largest_node = largest_node.r_child
+                dir_of_branch = "Right"
+
+            pointer.key = largest_node.key
+            if dir_of_branch == "Left":
+                parent_of_pointer.l_child = largest_node.l_child
+            else:
+                parent_of_pointer.r_child = largest_node.l_child
+        return True
