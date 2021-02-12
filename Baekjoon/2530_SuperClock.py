@@ -1,20 +1,25 @@
-import math
+from sys import stdin
 
-Start = [int(Num) for Num in input().split(' ')]
-Time = int(input())
+input = stdin.readline
 
-End = [0, 0, Time % 60]
-Carry = [math.floor(Time / 3600)]
-Carry.append(math.floor((Time - Carry[0] * 3600) / 60))
+h, m, s = [int(num) for num in input().rstrip().split()]
+cookingTime = int(input().rstrip())
 
-if Start[0] + Carry[0] >= 24:
-    End[0] = (Start[0] + Carry[0]) % 24
-else:
-    End[0] = Start[0] + Carry[0]
+cookingS = cookingTime % 60
+tempMin = cookingTime // 60
+cookingM = tempMin % 60
+cookingH = tempMin // 60
 
-if Start[1] + Carry[1] >= 60:
-    End[1] = (Start[1] + Carry[1]) % 24
-else:
-    End[1] = Start[1] + Carry[1]
+if s + cookingS >= 60:
+    cookingS -= 60
+    m += 1
+s += cookingS
 
-print("%d %d %d" % (End[0], End[1], End[2]))
+if m + cookingM >= 60:
+    cookingM -= 60
+    h += 1
+m += cookingM
+
+h = (h + cookingH) % 24
+
+print(f"{h} {m} {s}")
