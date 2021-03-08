@@ -2,43 +2,45 @@ from typing import List
 from math import floor
 
 
-def mergesort(array: List) -> None:
+def merge(front_half, rear_half, left_arr, right_arr, arr):
+    """ indexed from 0 """
+    i, j, k = 0, 0, 0
+    temp_arr = list()
 
-    if len(array) > 1:
-        left_array = list()
-        right_array = list()
-        mid = int(floor(len(array) / 2))
-
-        left_array.extend(array[:mid])
-        right_array.extend(array[mid:])
-        print(left_array, right_array)
-        assert array == left_array + right_array
-        mergesort(left_array)
-        mergesort(right_array)
-        __merge(left_array, right_array, array)
-
-
-def __merge(left_array: List, right_array: List, array: List) -> None:
-    left_index = 1
-    right_index = 1
-    upper_index = 1
-
-    while left_index < len(left_array) and right_index < len(right_array):
-        if left_array[left_index] < right_array[right_index]:
-            array[upper_index] = left_array[left_index]
-            left_index += 1
+    while i < front_half and j < rear_half:
+        if left_arr[i] < right_arr[j]:
+            temp_arr.append(left_arr[i])
+            i += 1
         else:
-            array[upper_index] = right_array[right_index]
-            right_index += 1
-        upper_index += 1
-
-    if len(left_array) > len(right_array):
-        array[upper_index:] = left_array[left_index:]
+            temp_arr.append(right_arr[j])
+            j += 1
+        k += 1
+    if i == front_half:
+        temp_arr.extend(right_arr[j:])
     else:
-        array[upper_index:] = right_array[right_index:]
+        temp_arr.extend(left_arr[i:])
+    arr.clear()
+    arr.extend(temp_arr)
 
 
-"""
-인덱스가 아직 산만함. 정리 필요.
-i, j, k, h, m 등의 변수들이 무엇을 의미하는지 확실한 이해 필요.
-"""
+def mergesort(arr: List) -> None:
+    if len(arr) > 1:
+        left_arr = list()
+        right_arr = list()
+        front_half = int(floor(len(arr) / 2))
+        rear_half = len(arr) - front_half
+        left_arr.extend(arr[:front_half])
+        right_arr.extend(arr[front_half:])
+        mergesort(left_arr)
+        mergesort(right_arr)
+        merge(front_half, rear_half, right_arr, left_arr, arr)
+
+
+if __name__ == "__main__":
+    A = [27, 10, 12, 20, 25, 13, 15, 22]
+    print(A)
+    mergesort(A)
+    print(A)
+
+""" mergesort 함수 하나로 정리하기
+merge를 mergesort 안에 포함시키기 """
